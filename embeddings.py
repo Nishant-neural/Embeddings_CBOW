@@ -2,6 +2,7 @@ import re
 from collections import Counter
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 text = """
 the movie was great and the acting was amazing
@@ -67,3 +68,21 @@ for epoch in range(100):
     
     if epoch % 10 == 0:
         print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
+
+embeddings = model.embedding.weight.data
+
+def find_similar(word, top_k=3):
+    idx = word2idx[word]
+    word_vec = embeddings[idx]
+    
+    similarities = []
+    
+    for i in range(vocab_size):
+        sim = F.cosine_similarity(word_vec, embeddings[i], dim=0)
+        similarities.append((idx2word[i], sim.item()))
+    
+    similarities = sorted(similarities, key=lambda x: -x[1])
+    
+    return similarities[1:top_k+1]
+
+print(find_similar("movie"))
