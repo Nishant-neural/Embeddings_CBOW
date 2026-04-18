@@ -26,11 +26,13 @@ This project implements word embeddings using the Continuous Bag of Words (CBOW)
    ```bash
    python train_cbow.py
    ```
+   This will save the trained embeddings to `cbow_embeddings.pth`.
 
 2. Train the sentiment classifier:
    ```bash
    python train_classifier.py
    ```
+   This loads the embeddings and trains the classifier, saving it to `sentiment_classifier.pth`.
 
 ## Description
 

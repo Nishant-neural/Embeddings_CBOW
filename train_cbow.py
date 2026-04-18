@@ -3,7 +3,7 @@ import torch.nn as nn
 from data import prepare_data
 from cbow_model import CBOW
 
-# Sample text
+
 text = """
 the movie was great and the acting was amazing
 the film was terrible and boring
@@ -30,3 +30,11 @@ for epoch in range(100):
         print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
 
 embeddings = model.embedding.weight.data
+
+
+torch.save({
+    'embeddings': embeddings,
+    'word2idx': word2idx,
+    'idx2word': idx2word,
+    'vocab_size': vocab_size
+}, 'cbow_embeddings.pth')
